@@ -45,5 +45,23 @@ async def run_command(command: str) -> Dict[str, Any]:
             "return_code": -1
         }
 
+@mcp.resource("mcpreadme://")
+async def read_mcp_readme() -> str:
+    """
+    Read the contents of mcpreadme.md file.
+    
+    Returns:
+        The contents of the mcpreadme.md file
+    """
+    try:
+        file_path = Path("mcpreadme.md")
+        if not file_path.exists():
+            return f"Error: mcpreadme.md file not found"
+        
+        with open(file_path, 'r', encoding='utf-8') as file:
+            return file.read()
+    except Exception as e:
+        return f"Error reading file: {str(e)}"
+
 if __name__ == "__main__":
     mcp.run("stdio")
